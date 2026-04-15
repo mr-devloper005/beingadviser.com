@@ -4,6 +4,7 @@ import { SITE_CONFIG, type TaskKey } from '@/lib/site-config'
 import { siteContent } from '@/config/site.content'
 import { getFactoryState } from '@/design/factory/get-factory-state'
 import { FOOTER_OVERRIDE_ENABLED, FooterOverride } from '@/overrides/footer'
+import { getListingOnlyNavTasks } from '@/components/shared/ui-listing-only-nav'
 
 const taskIcons: Record<TaskKey, any> = {
   article: FileText,
@@ -19,7 +20,7 @@ const taskIcons: Record<TaskKey, any> = {
 }
 
 const footerLinks = {
-  platform: SITE_CONFIG.tasks.filter((task) => task.enabled).map((task) => ({
+  platform: getListingOnlyNavTasks().map((task) => ({
     name: task.label,
     href: task.route,
     icon: taskIcons[task.key] || LayoutGrid,
@@ -33,6 +34,7 @@ const footerLinks = {
   ],
   resources: [
     { name: 'Help Center', href: '/help' },
+    { name: 'Contact Us', href: '/contact' },
     { name: 'Community', href: '/community' },
     { name: 'Developers', href: '/developers' },
     { name: 'Status', href: '/status' },
@@ -57,7 +59,7 @@ export function Footer() {
   }
 
   const { recipe } = getFactoryState()
-  const enabledTasks = SITE_CONFIG.tasks.filter((task) => task.enabled)
+  const enabledTasks = getListingOnlyNavTasks()
   const primaryTask = enabledTasks.find((task) => task.key === recipe.primaryTask) || enabledTasks[0]
 
   if (recipe.footer === 'minimal-footer') {

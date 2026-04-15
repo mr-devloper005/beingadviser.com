@@ -8,6 +8,7 @@ import { Search, Menu, X, User, FileText, Building2, LayoutGrid, Tag, Image as I
 import { Button } from '@/components/ui/button'
 import { useAuth } from '@/lib/auth-context'
 import { SITE_CONFIG, type TaskKey } from '@/lib/site-config'
+import { getListingOnlyNavTasks, getListingTaskOrNull } from '@/components/shared/ui-listing-only-nav'
 import { cn } from '@/lib/utils'
 import { siteContent } from '@/config/site.content'
 import { getFactoryState } from '@/design/factory/get-factory-state'
@@ -97,14 +98,14 @@ export function Navbar() {
   const { isAuthenticated } = useAuth()
   const { recipe } = getFactoryState()
 
-  const navigation = useMemo(() => SITE_CONFIG.tasks.filter((task) => task.enabled && task.key !== 'profile'), [])
+  const navigation = useMemo(() => getListingOnlyNavTasks(), [])
   const primaryNavigation = navigation.slice(0, 5)
   const mobileNavigation = navigation.map((task) => ({
     name: task.label,
     href: task.route,
     icon: taskIcons[task.key] || LayoutGrid,
   }))
-  const primaryTask = SITE_CONFIG.tasks.find((task) => task.key === recipe.primaryTask && task.enabled) || primaryNavigation[0]
+  const primaryTask = getListingTaskOrNull() || primaryNavigation[0]
   const isDirectoryProduct = recipe.homeLayout === 'listing-home' || recipe.homeLayout === 'classified-home'
 
   if (isDirectoryProduct) {
@@ -217,7 +218,7 @@ export function Navbar() {
                   <MapPin className="h-4 w-4" />
                   Local discovery
                 </div>
-                <p className="mt-2 text-xs leading-6 opacity-75">Use business listings, classifieds, and support lanes without cramped top navigation.</p>
+                <p className="mt-2 text-xs leading-6 opacity-75">Browse and manage business listings without cramped top navigation.</p>
               </div>
             </div>
 
@@ -316,7 +317,7 @@ export function Navbar() {
               <Search className="h-3.5 w-3.5" />
               Quick Find
             </div>
-            <p className="mt-2 text-sm leading-6 opacity-80">Browse by task, lane, or content type without cramped top navigation.</p>
+            <p className="mt-2 text-sm leading-6 opacity-80">Browse listings and saved tools without cramped top navigation.</p>
           </div>
 
           {primaryTask ? (

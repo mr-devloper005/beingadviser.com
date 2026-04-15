@@ -22,20 +22,27 @@ export default function HelpPage() {
         </Button>
       }
     >
+      <section className="rounded-[2rem] border border-slate-200 bg-[linear-gradient(180deg,#eef6ff_0%,#ffffff_100%)] p-7 shadow-[0_18px_50px_rgba(15,23,42,0.06)]">
+        <h2 className="text-3xl font-semibold tracking-[-0.04em] text-slate-950">Support designed for quick resolution</h2>
+        <p className="mt-3 max-w-3xl text-sm leading-8 text-slate-600">
+          Browse topic-based help guides, then move to FAQs for common edge cases. If you still need help, our support
+          team is one message away.
+        </p>
+      </section>
       <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
         <div className="grid gap-6 md:grid-cols-2">
           {topics.map((topic) => (
-            <Card key={topic.title} className="border-border bg-card transition-transform hover:-translate-y-1">
+            <Card key={topic.title} className="border-slate-200 bg-white transition-transform hover:-translate-y-1">
               <CardContent className="p-6">
-                <h2 className="text-lg font-semibold text-foreground">{topic.title}</h2>
-                <p className="mt-2 text-sm text-muted-foreground">{topic.description}</p>
+                <h2 className="text-lg font-semibold text-slate-950">{topic.title}</h2>
+                <p className="mt-2 text-sm text-slate-600">{topic.description}</p>
               </CardContent>
             </Card>
           ))}
         </div>
-        <Card className="border-border bg-card">
+        <Card className="border-slate-200 bg-white">
           <CardContent className="p-6">
-            <h3 className="text-lg font-semibold text-foreground">FAQ</h3>
+            <h3 className="text-lg font-semibold text-slate-950">FAQ</h3>
             <Accordion type="single" collapsible className="mt-4">
               {mockFaqs.map((faq) => (
                 <AccordionItem key={faq.id} value={faq.id}>

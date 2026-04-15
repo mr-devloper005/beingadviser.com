@@ -15,6 +15,7 @@ import { Badge } from '@/components/ui/badge'
 import { useToast } from '@/components/ui/use-toast'
 import { useAuth } from '@/lib/auth-context'
 import { SITE_CONFIG, type TaskKey } from '@/lib/site-config'
+import { getListingOnlyNavTasks } from '@/components/shared/ui-listing-only-nav'
 
 const taskIcons: Record<TaskKey, any> = {
   article: FileText,
@@ -44,7 +45,7 @@ export function NavbarAuthControls() {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className="w-56 border-[rgba(110,26,55,0.12)] bg-[rgba(255,250,244,0.98)]">
-          {SITE_CONFIG.tasks.filter((task) => task.enabled).map((task) => {
+          {getListingOnlyNavTasks().map((task) => {
             const Icon = taskIcons[task.key] || LayoutGrid
             return (
               <DropdownMenuItem key={task.key} asChild>

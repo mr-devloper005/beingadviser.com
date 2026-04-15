@@ -5,7 +5,6 @@ import { Search } from "lucide-react";
 import { fetchSiteFeed } from "@/lib/site-connector";
 import { buildPostUrl, getPostTaskKey } from "@/lib/task-data";
 import { getMockPostsForTask } from "@/lib/mock-posts";
-import { SITE_CONFIG } from "@/lib/site-config";
 import { TaskPostCard } from "@/components/shared/task-post-card";
 
 export const revalidate = 3;
@@ -42,9 +41,11 @@ export default async function SearchPage({
       ? feed.posts
       : useMaster
         ? []
-        : SITE_CONFIG.tasks.flatMap((task) => getMockPostsForTask(task.key));
+        : getMockPostsForTask("listing");
 
-  const filtered = posts.filter((post) => {
+  const listingPostsOnly = posts.filter((post) => getPostTaskKey(post) === "listing");
+
+  const filtered = listingPostsOnly.filter((post) => {
     const content = post.content && typeof post.content === "object" ? post.content : {};
     const typeText = compactText((content as any).type);
     if (typeText === "comment") return false;
@@ -76,7 +77,7 @@ export default async function SearchPage({
       description={
         query
           ? `Results for "${query}"`
-          : "Browse the latest posts across every task."
+          : "Search business listings and local profiles in the directory."
       }
       actions={
         <form action="/search" className="flex w-full gap-2 sm:w-auto">
@@ -88,7 +89,7 @@ export default async function SearchPage({
             <Input
               name="q"
               defaultValue={query}
-              placeholder="Search across tasks..."
+              placeholder="Search listings..."
               className="h-11 pl-9"
             />
           </div>

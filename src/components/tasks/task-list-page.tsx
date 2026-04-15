@@ -121,17 +121,42 @@ export async function TaskListPage({ task, category }: { task: TaskKey; category
         ) : null}
 
         {layoutKey === 'listing-directory' || layoutKey === 'listing-showcase' ? (
-          <section className="mb-12 grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
+          <section className="mb-12 grid gap-6 lg:grid-cols-[1.06fr_0.94fr] lg:items-end">
             <div className={`rounded-[2rem] p-7 shadow-[0_24px_70px_rgba(15,23,42,0.07)] ${ui.panel}`}>
-              <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.24em] opacity-70"><Icon className="h-4 w-4" /> {taskConfig?.label || task}</div>
-              <h1 className="mt-4 text-4xl font-semibold tracking-[-0.04em] text-foreground">{taskConfig?.description || 'Latest posts'}</h1>
-              <p className={`mt-4 max-w-2xl text-sm leading-7 ${ui.muted}`}>Built with a cleaner scan rhythm, stronger metadata grouping, and a structure designed for business discovery rather than editorial reading.</p>
+              <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.24em] opacity-70">
+                <Icon className="h-4 w-4" />
+                {taskConfig?.label || task}
+              </div>
+              <h1 className="mt-4 text-4xl font-semibold tracking-[-0.04em] text-foreground">
+                Discover trusted local businesses with complete details and faster decisions.
+              </h1>
+              <p className={`mt-4 max-w-2xl text-sm leading-7 ${ui.muted}`}>
+                Compare services, review essential business information, and connect directly without jumping across
+                multiple directories. The layout is optimized for scanning and acting in one flow.
+              </p>
+              <div className="mt-6 grid gap-3 sm:grid-cols-3">
+                {[
+                  ['Verified profiles', 'Identity-focused listing cards'],
+                  ['Action-ready', 'Call, visit, save, and compare faster'],
+                  ['Local-first filters', 'Category and area discovery'],
+                ].map(([label, note]) => (
+                  <div key={label} className={`rounded-[1.2rem] p-4 ${ui.soft}`}>
+                    <p className="text-xs font-semibold uppercase tracking-[0.2em] opacity-70">{label}</p>
+                    <p className={`mt-2 text-sm leading-6 ${ui.muted}`}>{note}</p>
+                  </div>
+                ))}
+              </div>
               <div className="mt-6 flex flex-wrap gap-3">
-                <Link href={taskConfig?.route || '#'} className={`inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold ${ui.button}`}>Explore results <ArrowRight className="h-4 w-4" /></Link>
-                <Link href="/search" className={`inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold ${ui.soft}`}>Open search</Link>
+                <Link href={taskConfig?.route || '#'} className={`inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold ${ui.button}`}>
+                  Explore listings
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link href="/search" className={`inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold ${ui.soft}`}>
+                  Open global search
+                </Link>
               </div>
             </div>
-            <form className={`grid gap-3 rounded-[2rem] p-6 shadow-[0_18px_50px_rgba(15,23,42,0.06)] ${ui.soft}`} action={taskConfig?.route || '#'}>
+            <form className={`grid gap-4 rounded-[2rem] p-6 shadow-[0_18px_50px_rgba(15,23,42,0.06)] ${ui.soft}`} action={taskConfig?.route || '#'}>
               <div>
                 <label className={`text-xs uppercase tracking-[0.2em] ${ui.muted}`}>Category</label>
                 <select name="category" defaultValue={normalizedCategory} className={`mt-2 h-11 w-full rounded-xl px-3 text-sm ${ui.input}`}>
@@ -142,6 +167,9 @@ export async function TaskListPage({ task, category }: { task: TaskKey; category
                 </select>
               </div>
               <button type="submit" className={`h-11 rounded-xl text-sm font-medium ${ui.button}`}>Apply filters</button>
+              <div className={`rounded-xl p-4 text-sm leading-6 ${ui.panel}`}>
+                Save time by filtering first, then opening profiles with complete business context and trust cues.
+              </div>
             </form>
           </section>
         ) : null}
@@ -200,15 +228,35 @@ export async function TaskListPage({ task, category }: { task: TaskKey; category
         ) : null}
 
         {layoutKey === 'classified-bulletin' || layoutKey === 'classified-market' ? (
-          <section className="mb-12 grid gap-4 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-            <div className={`rounded-[1.8rem] p-6 ${ui.panel}`}>
+          <section className="mb-12 grid gap-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
+            <div className={`rounded-[2rem] p-7 ${ui.panel}`}>
               <p className={`text-xs uppercase tracking-[0.3em] ${ui.muted}`}>{taskConfig?.label || task}</p>
-              <h1 className="mt-3 text-4xl font-semibold tracking-[-0.05em] text-foreground">Fast-moving notices, offers, and responses in a compact board format.</h1>
+              <h1 className="mt-3 text-4xl font-semibold tracking-[-0.05em] text-foreground">
+                Fresh local opportunities, requests, and offers in a responsive bulletin layout.
+              </h1>
+              <p className={`mt-4 text-sm leading-7 ${ui.muted}`}>
+                Built for speed and clarity, this page helps users discover timely posts, react quickly, and avoid
+                missing high-intent opportunities.
+              </p>
+              <form className="mt-6 flex flex-col gap-3 sm:flex-row" action={taskConfig?.route || '#'}>
+                <select name="category" defaultValue={normalizedCategory} className={`h-11 flex-1 rounded-xl px-3 text-sm ${ui.input}`}>
+                  <option value="all">All categories</option>
+                  {CATEGORY_OPTIONS.map((item) => (
+                    <option key={item.slug} value={item.slug}>{item.name}</option>
+                  ))}
+                </select>
+                <button type="submit" className={`h-11 rounded-xl px-4 text-sm font-medium ${ui.button}`}>Filter posts</button>
+              </form>
             </div>
             <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-              {['Quick to scan', 'Shorter response path', 'Clearer urgency cues'].map((item) => (
-                <div key={item} className={`rounded-[1.5rem] p-5 ${ui.soft}`}>
-                  <p className="text-sm font-semibold">{item}</p>
+              {[
+                ['Quick to scan', 'Short, structured cards designed for immediate reading.'],
+                ['Clear urgency', 'Time-sensitive posts are easier to identify and prioritize.'],
+                ['Direct response', 'Users can reach out with fewer steps and faster follow-up.'],
+              ].map(([title, description]) => (
+                <div key={title} className={`rounded-[1.5rem] p-5 ${ui.soft}`}>
+                  <p className="text-sm font-semibold">{title}</p>
+                  <p className={`mt-2 text-sm leading-6 ${ui.muted}`}>{description}</p>
                 </div>
               ))}
             </div>
