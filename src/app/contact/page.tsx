@@ -29,10 +29,12 @@ export default function ContactPage() {
     return <ContactPageOverride />
   }
 
+  const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() || `hello@${SITE_CONFIG.domain}`
+
   return (
     <PageShell
       title="Contact Us"
-      description={`Tell ${SITE_CONFIG.name} what you need—support, partnerships, or feedback—and we will route it to the right team.`}
+      description={`Tell ${SITE_CONFIG.name} what you need-support, partnerships, or feedback-and we will route it to the right team.`}
       actions={
         <Button variant="outline" asChild className="rounded-full">
           <Link href="/help">Help Center</Link>
@@ -42,7 +44,7 @@ export default function ContactPage() {
       <section className="rounded-[2rem] border border-slate-200 bg-[linear-gradient(180deg,#eef6ff_0%,#ffffff_100%)] p-7 shadow-[0_18px_50px_rgba(15,23,42,0.06)]">
         <h2 className="text-3xl font-semibold tracking-[-0.04em] text-slate-950">We respond with context, not generic replies</h2>
         <p className="mt-3 max-w-3xl text-sm leading-8 text-slate-600">
-          Share enough detail in your message so we can suggest the next step quickly—whether that is account help, a
+          Share enough detail in your message so we can suggest the next step quickly-whether that is account help, a
           listing change, or a partnership conversation.
         </p>
       </section>
@@ -59,12 +61,19 @@ export default function ContactPage() {
             </Card>
           ))}
           <Card className="border-slate-200 bg-slate-50">
-            <CardContent className="flex flex-wrap items-center gap-4 p-6">
-              <Mail className="h-5 w-5 text-slate-700" />
-              <div>
-                <p className="text-sm font-semibold text-slate-950">Prefer email?</p>
-                <p className="text-sm text-slate-600">Use the form — replies go to the address you provide.</p>
+            <CardContent className="flex flex-wrap items-center justify-between gap-4 p-6">
+              <div className="flex items-center gap-4">
+                <Mail className="h-5 w-5 text-slate-700" />
+                <div>
+                  <p className="text-sm font-semibold text-slate-950">Prefer email?</p>
+                  <p className="text-sm text-slate-600">
+                    Write to <span className="font-medium text-slate-800">{contactEmail}</span>.
+                  </p>
+                </div>
               </div>
+              <Button asChild className="rounded-full">
+                <a href={`mailto:${contactEmail}`}>Email Us</a>
+              </Button>
             </CardContent>
           </Card>
         </div>

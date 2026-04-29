@@ -299,7 +299,29 @@ export async function TaskListPage({ task, category }: { task: TaskKey; category
           </section>
         ) : null}
 
-        <TaskListClient task={task} initialPosts={posts} category={normalizedCategory} />
+        {task === 'listing' ? (
+          <section className="grid gap-6 lg:grid-cols-[2fr_1fr]">
+            <div className="space-y-6">
+              <TaskListClient task={task} initialPosts={posts} category={normalizedCategory} />
+            </div>
+            <aside className="space-y-6">
+              <div className="rounded-[1rem] border border-slate-200 bg-white p-6 shadow-[0_14px_40px_rgba(15,23,42,0.06)]">
+                <h3 className="text-lg font-semibold text-slate-900">Refine Listings</h3>
+                <form className="mt-4 space-y-3" action={taskConfig?.route || '#'}>
+                  <select name="category" defaultValue={normalizedCategory} className={`h-11 w-full rounded-md px-3 text-sm ${ui.input}`}>
+                    <option value="all">All categories</option>
+                    {CATEGORY_OPTIONS.map((item) => (
+                      <option key={item.slug} value={item.slug}>{item.name}</option>
+                    ))}
+                  </select>
+                  <button type="submit" className={`h-11 w-full rounded-md text-sm font-semibold ${ui.button}`}>Apply filters</button>
+                </form>
+              </div>
+            </aside>
+          </section>
+        ) : (
+          <TaskListClient task={task} initialPosts={posts} category={normalizedCategory} />
+        )}
       </main>
       <Footer />
     </div>
