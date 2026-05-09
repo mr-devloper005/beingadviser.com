@@ -71,9 +71,6 @@ export function DirectoryTaskDetailPage({
               </div>
               <div>
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                  <Link href="#reviews" className="text-sm font-semibold text-amber-600 hover:underline">
-                    See all reviews
-                  </Link>
                   {location ? (
                     <p className="inline-flex items-center gap-1.5 text-sm text-slate-600">
                       <MapPin className="h-4 w-4 shrink-0" />
