@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Building2, Mail, MapPin, Phone } from 'lucide-react'
+import { Building2, MapPin, Phone } from 'lucide-react'
 import { PageShell } from '@/components/shared/page-shell'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -28,8 +28,6 @@ export default function ContactPage() {
   if (CONTACT_PAGE_OVERRIDE_ENABLED) {
     return <ContactPageOverride />
   }
-
-  const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() || `hello@${SITE_CONFIG.domain}`
 
   return (
     <PageShell
@@ -60,22 +58,6 @@ export default function ContactPage() {
               </CardContent>
             </Card>
           ))}
-          <Card className="border-slate-200 bg-slate-50">
-            <CardContent className="flex flex-wrap items-center justify-between gap-4 p-6">
-              <div className="flex items-center gap-4">
-                <Mail className="h-5 w-5 text-slate-700" />
-                <div>
-                  <p className="text-sm font-semibold text-slate-950">Prefer email?</p>
-                  <p className="text-sm text-slate-600">
-                    Write to <span className="font-medium text-slate-800">{contactEmail}</span>.
-                  </p>
-                </div>
-              </div>
-              <Button asChild className="rounded-full">
-                <a href={`mailto:${contactEmail}`}>Email Us</a>
-              </Button>
-            </CardContent>
-          </Card>
         </div>
 
         <Card className="border-slate-200 bg-white shadow-[0_18px_50px_rgba(15,23,42,0.06)]">

@@ -120,11 +120,7 @@ export const taskIntroCopy: Record<
       'Listings connect naturally with articles, images, resources, and other content types so supporting information stays easy to reach from the same platform.',
       'Browse by category to compare posts in context, discover related content, and move between formats without losing your place.',
     ],
-    links: [
-      { label: 'Read articles', href: '/articles' },
-      { label: 'Explore classifieds', href: '/classifieds' },
-      { label: 'View profiles', href: '/profile' },
-    ],
+    links: [],
   },
   article: {
     title: 'Articles, stories, and long-form reading',
