@@ -1,6 +1,7 @@
 'use client'
 
 import { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from 'react'
+import { useRouter } from 'next/navigation'
 import type { User } from '@/types'
 import { currentUser } from '@/data/mock-data'
 import { loadFromStorage, saveToStorage, storageKeys } from '@/lib/local-storage'
@@ -20,6 +21,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const router = useRouter()
 
   useEffect(() => {
     const storedUser = loadFromStorage<User | null>(storageKeys.user, null)
@@ -60,9 +62,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           })
       setUser(nextUser)
       saveToStorage(storageKeys.user, nextUser)
+      router.push('/')
     }
     setIsLoading(false)
-  }, [buildUser])
+  }, [buildUser, router])
 
   const logout = useCallback(() => {
     setUser(null)
@@ -84,9 +87,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       })
       setUser(nextUser)
       saveToStorage(storageKeys.user, nextUser)
+      router.push('/')
     }
     setIsLoading(false)
-  }, [buildUser])
+  }, [buildUser, router])
 
   const updateUser = useCallback((updates: Partial<User>) => {
     setUser((prev) => {
