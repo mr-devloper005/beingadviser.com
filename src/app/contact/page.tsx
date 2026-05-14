@@ -1,56 +1,74 @@
-import { Mail, MessageSquareText, ShieldCheck } from 'lucide-react';
+import Link from 'next/link'
+import { Building2, MapPin, Phone } from 'lucide-react'
+import { PageShell } from '@/components/shared/page-shell'
+import { Card, CardContent } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { SITE_CONFIG } from '@/lib/site-config'
+import { CONTACT_PAGE_OVERRIDE_ENABLED, ContactPageOverride } from '@/overrides/contact-page'
+import { ContactLeadForm } from "@/components/shared/contact-lead-form";
 
-import { ContactLeadForm } from '@/components/shared/contact-lead-form';
-import { Footer } from '@/components/shared/footer';
-import { NavbarShell } from '@/components/shared/navbar-shell';
-
-const siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'Being Adviser';
-
-const contactHighlights = [
-  { icon: Mail, title: 'Direct response', copy: 'Your message is saved securely and routed to the right team.' },
-  { icon: MessageSquareText, title: 'Clear details', copy: 'Share your requirement, question, or collaboration idea in one place.' },
-  { icon: ShieldCheck, title: 'Reliable follow-up', copy: 'We keep the request record so every conversation stays traceable.' },
-];
+const lanes = [
+  {
+    icon: Building2,
+    title: 'Listings & business profiles',
+    body: 'Get help publishing, updating, or verifying your business so customers see accurate details.',
+  },
+  {
+    icon: Phone,
+    title: 'Partnerships & sales',
+    body: 'Discuss bulk onboarding, integrations, or programs that fit your organization.',
+  },
+  {
+    icon: MapPin,
+    title: 'Coverage & local programs',
+    body: 'Request new areas, categories, or community initiatives we should prioritize.',
+  },
+]
 
 export default function ContactPage() {
+  if (CONTACT_PAGE_OVERRIDE_ENABLED) {
+    return <ContactPageOverride />
+  }
+
   return (
-    <div className="min-h-screen bg-[#f7f1e8] text-stone-950">
-      <NavbarShell />
-      <main>
-        <section className="relative overflow-hidden px-6 py-20 md:px-10 lg:px-16">
-          <div className="absolute left-[-10%] top-10 h-72 w-72 rounded-full bg-amber-200/40 blur-3xl" />
-          <div className="absolute bottom-0 right-[-8%] h-80 w-80 rounded-full bg-stone-300/50 blur-3xl" />
+    <PageShell
+      title="Contact Us"
+      description={`Tell ${SITE_CONFIG.name} what you need-support, partnerships, or feedback-and we will route it to the right team.`}
+      actions={
+        <Button variant="outline" asChild className="rounded-full">
+          <Link href="/help">Help Center</Link>
+        </Button>
+      }
+    >
+      <section className="rounded-[2rem] border border-slate-200 bg-[linear-gradient(180deg,#eef6ff_0%,#ffffff_100%)] p-7 shadow-[0_18px_50px_rgba(15,23,42,0.06)]">
+        <h2 className="text-3xl font-semibold tracking-[-0.04em] text-slate-950">We respond with context, not generic replies</h2>
+        <p className="mt-3 max-w-3xl text-sm leading-8 text-slate-600">
+          Share enough detail in your message so we can suggest the next step quickly-whether that is account help, a
+          listing change, or a partnership conversation.
+        </p>
+      </section>
 
-          <div className="relative mx-auto grid max-w-6xl gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-            <div>
-              <p className="text-sm font-black uppercase tracking-[0.35em] text-stone-500">Contact</p>
-              <h1 className="mt-5 max-w-3xl text-5xl font-black leading-[0.95] tracking-[-0.06em] text-stone-950 md:text-7xl">
-                Let&apos;s talk about your next move.
-              </h1>
-              <p className="mt-6 max-w-2xl text-lg leading-8 text-stone-700">
-                Use this form to reach {siteName}. Your request will be recorded and shared with the support team for follow-up.
-              </p>
+      <div className="mt-8 grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
+        <div className="space-y-4">
+          {lanes.map((lane) => (
+            <Card key={lane.title} className="border-slate-200 bg-white">
+              <CardContent className="p-6">
+                <lane.icon className="h-5 w-5 text-slate-700" />
+                <h3 className="mt-3 text-xl font-semibold text-slate-950">{lane.title}</h3>
+                <p className="mt-2 text-sm leading-7 text-slate-600">{lane.body}</p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
 
-              <div className="mt-8 grid gap-4">
-                {contactHighlights.map((item) => (
-                  <div key={item.title} className="flex gap-4 rounded-3xl border border-stone-200 bg-white/60 p-5 shadow-sm">
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-stone-950 text-white">
-                      <item.icon className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <h2 className="text-base font-black text-stone-950">{item.title}</h2>
-                      <p className="mt-1 text-sm leading-6 text-stone-600">{item.copy}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
+        <Card className="border-slate-200 bg-white shadow-[0_18px_50px_rgba(15,23,42,0.06)]">
+          <CardContent className="p-6 sm:p-8">
+            <h2 className="text-2xl font-semibold text-slate-950">Send a message</h2>
+            <p className="mt-2 text-sm text-slate-600">Fields below are for UI only until a backend form is connected.</p>
             <ContactLeadForm />
-          </div>
-        </section>
-      </main>
-      <Footer />
-    </div>
-  );
+          </CardContent>
+        </Card>
+      </div>
+    </PageShell>
+  )
 }
